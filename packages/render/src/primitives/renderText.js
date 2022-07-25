@@ -180,10 +180,9 @@ const renderLine = (ctx, line, options) => {
   for (let i = 0; i < line.runs.length; i += 1) {
     const run = line.runs[i];
     const isLastRun = i === line.runs.length - 1;
+    const overflowRight = isLastRun ? line.overflowRight : 0;
 
     if (run.attributes.backgroundColor) {
-      const overflowRight = isLastRun ? line.overflowRight : 0;
-
       const backgroundRect = {
         x: 0,
         y: -lineAscent,
@@ -193,6 +192,17 @@ const renderLine = (ctx, line, options) => {
 
       renderBackground(ctx, backgroundRect, run.attributes.backgroundColor);
     }
+
+    if (run.attributes.id) {
+      ctx.addNamedDestination(
+        run.attributes.id,
+        'XYZ',
+        run.xAdvance - overflowRight,
+        -lineAscent,
+        null,
+      );
+    }
+
     renderRun(ctx, run, options);
   }
 

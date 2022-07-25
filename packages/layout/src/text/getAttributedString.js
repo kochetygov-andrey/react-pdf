@@ -40,6 +40,8 @@ const getFragments = (fontStore, instance, parentLink, level = 0) => {
     opacity,
   } = instance.style;
 
+  const { id } = instance.props;
+
   const opts = { fontFamily, fontWeight, fontStyle };
   const obj = fontStore ? fontStore.getFont(opts) : null;
   const font = obj ? obj.data : fontFamily;
@@ -48,6 +50,7 @@ const getFragments = (fontStore, instance, parentLink, level = 0) => {
   const backgroundColor = level === 0 ? null : instance.style.backgroundColor;
 
   const attributes = {
+    id,
     font,
     color,
     opacity,
